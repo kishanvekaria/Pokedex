@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Pokedex</title>
-</head>
-<body>
-    <h1>Hello from template</h1>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %} Home {% endblock %}
+
+{% block body %}
+<h1>Welcome to the Pokedex Home</h1>
+<div>
+    <div>
+        <div>
+
+            <h2> Manage <b> Pokemon Database <b/> <button><a href="pokemondatabase">View Database </a></button> </h2>
+            <h2> Catch Pokemon <b/> <button><a href="catchpokemon">View Database </a></button> </h2>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
