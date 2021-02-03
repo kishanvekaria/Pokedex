@@ -7,7 +7,7 @@ class Pokedata(db.Model):
     poketype = db.Column(db.String(30))
 
     def __repr__(self):
-        return f"{self.poke_id} {self.name} {self.poketype}"
+        return f"{self.id} {self.poke_id} {self.name} {self.poketype}"
 
 
 class Caught(db.Model):
@@ -17,4 +17,4 @@ class Caught(db.Model):
     data_id =db.Column(db.Integer, db.ForeignKey('pokedata.id'))
 
     def __repr__(self):
-        return f"Caught('{self.pokeball_id}', '{self.nickname}')"
+        return f"{self.data_id} {self.pokeball_id} {self.nickname}"

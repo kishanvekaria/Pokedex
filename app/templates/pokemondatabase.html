@@ -5,24 +5,26 @@
 {% block body %}
 <h1>Welcome to the Pokedex Database</h1>
 <div>
-    <h2> Return Home <b/> <button><a href="home">Home</a></button> </h2>
+    <h2><b> Return Home <b/> <button><a href="home">Home</a></button> </h2>
     <h2><b> Add Pokemon <b/> <button><a href="insert">Click here</a></button> </h2>
     <div>
+        <div>
         <table>
             <tr>
                 {% for header in headings %}
                 <th>{{header}}</th>
                 {% endfor %}
             </tr>
-            {% for line in table %}
+
+            {% for pokemon in table%}
             <tr>
-                <td>{{ line }}</td>
-            </tr>
+            <td>{{pokemon.id}}</td> <td>{{pokemon.poke_id}}</td> <td>{{pokemon.name}}</td> <td>{{pokemon.poketype}}</td><td><button><a href="update">Update</a></button></td><td><button><a href="delete">Delete</a></button></td>
+             </tr>
             {% endfor %}
-
-
-
         </table>
+        </div>
+        <br>
+
 
     </div>
 </div>

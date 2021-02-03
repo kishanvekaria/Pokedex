@@ -12,5 +12,9 @@ class pokedatabaseforms(FlaskForm):
     poketype = StringField('poketype', validators=[DataRequired()])
     submit = SubmitField('Enter Pokemon')
 
+class caughtforms(FlaskForm):
+    pokeball_id = IntegerField('pokeball_id', validators=[DataRequired()])
+    nickname = StringField('Nickname', validators=[DataRequired()])
+    submit = SubmitField('Enter Pokemon')
 
 
