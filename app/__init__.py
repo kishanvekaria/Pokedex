@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -10,3 +10,4 @@ db = SQLAlchemy(app)
 
 
 from app import routes, models, forms
+

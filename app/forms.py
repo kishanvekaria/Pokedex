@@ -2,7 +2,8 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, ValidationError
+from app.models import Pokedata
 
 
 class pokedatabaseforms(FlaskForm):
@@ -10,5 +11,6 @@ class pokedatabaseforms(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     poketype = StringField('poketype', validators=[DataRequired()])
     submit = SubmitField('Enter Pokemon')
+
 
 
