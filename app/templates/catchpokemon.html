@@ -18,7 +18,7 @@
 
             {% for ball in table_2%}
             <tr>
-            <td>{{ball.id}}</td> <td>{{ball.pokeball_id}}</td> <td>{{ball.nickname}}</td> <td><button><a href="update">Update</a></button></td><td><button><a href="delete">Delete</a></button></td>
+            <td>{{ball.id}}</td> <td>{{ball.pokeball_id}}</td> <td>{{ball.nickname}}</td> <td><button><a href="/update/{{ ball.id }}">Update Nickname</a></button></td><td><button><a href="/delete/{{ ball.id }}">Delete</a></button></td>
              </tr>
             {% endfor %}
         </table>

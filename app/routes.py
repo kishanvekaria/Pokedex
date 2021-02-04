@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for
 from app.forms import pokedatabaseforms, caughtforms
 from app.models import  Pokedata, Caught
 from app import app, db
@@ -10,7 +10,7 @@ from sqlalchemy import func
 def home():
     return render_template("home.html")
 
-headings = ("ID","Poke_ID","Name","Poketype", "Update", "Delete")
+headings = ("ID","Poke_ID","Name","Poketype",)
 table = Pokedata.query.all()
 print(table)
 pokemon=Pokedata.id
@@ -62,10 +62,15 @@ def catchit():
     return render_template("catchit.html", form=form, rand_final=rand_final,)
 
 
-@app.route('/delete')
-def delete():
-    return render_template("delete.html")
+@app.route("/delete/<int:ball_id>")
+def delete(ball_id):
+    letitgo = Caught.query.filter_by(id=ball_id).first()
+    db.session.delete(letitgo)
+    db.session.commit()
+    return redirect(url_for('catchpokemon'))
+
 
 @app.route('/update')
 def update():
     return render_template("update.html")
+
