@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from app.forms import pokedatabaseforms, caughtforms
+from app.forms import pokedatabaseforms, caughtforms, rename
 from app.models import  Pokedata, Caught
 from app import app, db
 import random
@@ -52,17 +52,15 @@ def catchit():
     rand_list = rand_data.split()
     rand_final = (rand_list[2] + ", Pokenumber#" + str(rand_list[1]) + ", " +  "ID is " + str(rand_list[0]))
     form = caughtforms()
-    print(Pokedata.query.filter_by(id=rand_list[0]).first())
     if form.validate_on_submit():
         ball = Caught( pokeball_id=form.pokeball_id.data, nickname=form.nickname.data, poke_name=Pokedata.query.filter_by(id=rand_list[0]).first())
-        #country = Country.query.filter_by(name='United Kingdom').first()
         db.session.add(ball)
         db.session.commit()
         return redirect(url_for('catchpokemon'))
     return render_template("catchit.html", form=form, rand_final=rand_final,)
 
 
-@app.route("/delete/<int:ball_id>")
+@app.route('/delete/<int:ball_id>', methods = ['GET', 'POST'])
 def delete(ball_id):
     letitgo = Caught.query.filter_by(id=ball_id).first()
     db.session.delete(letitgo)
@@ -70,7 +68,14 @@ def delete(ball_id):
     return redirect(url_for('catchpokemon'))
 
 
-@app.route('/update')
-def update():
-    return render_template("update.html")
-
+@app.route('/update/<int:ball_id>', methods = ['GET', 'POST'])
+def update(ball_id):
+    form = rename()
+    print("helloworld")
+    if form.validate_on_submit():
+        ballupdate = db.session.query(Caught).filter_by(id=ball_id).one()
+        ballupdate.nickname= form.nickname.data
+        db.session.commit()
+        print("hello")
+        return redirect(url_for('catchpokemon'))
+    return render_template('update.html', form=form )

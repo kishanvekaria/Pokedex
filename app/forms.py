@@ -18,4 +18,6 @@ class caughtforms(FlaskForm):
     refid = IntegerField('Enter ID above', validators=[DataRequired()])
     submit = SubmitField('Enter Pokemon')
 
-
+class rename(FlaskForm):
+    nickname = StringField('Nickname', validators=[DataRequired()])
+    submit = SubmitField('Enter Pokemon')
