@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} Here's where to catch em {% endblock %}
+
+{% block body %}
+<h1>Add to your Caught Pokemon</h1>
+<div>
+    <h2> View <b> Caught Pokemon <b/> <button><a href="catchpokemon">View Caught</a></button> </h2>
+    <div>
+        <h2> You caught a {{ rand_final }} </h2>
+
+        <form  method = "POST" action="">
+            {{ form.hidden_tag() }}
+            <div class ="form-group">
+                {{ form.pokeball_id.label }}
+                {{ form.pokeball_id (size=10)}}
+            </div>
+            <div class ="throw-group">
+                {{ form.nickname.label }}
+                {{ form.nickname (size=30)}}
+            </div>
+            <div class ="throw-group">
+                {{ form.refid.label }}
+                {{ form.refid (size=10)}}
+            <div class ="throw-group">
+                {{ form.submit }}
+            </div>
+
+        </form>
+    </div>
+    {% endblock %}

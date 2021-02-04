@@ -9,6 +9,19 @@
     <h2> Throw a Pokeball <b/> <button><a href="catchit">Throw</a></button> </h2>
     <div>
         <div>
+            <table>
+            <tr>
+                {% for header in headings_2 %}
+                <th>{{header}}</th>
+                {% endfor %}
+            </tr>
+
+            {% for ball in table_2%}
+            <tr>
+            <td>{{ball.id}}</td> <td>{{ball.pokeball_id}}</td> <td>{{ball.nickname}}</td> <td><button><a href="update">Update</a></button></td><td><button><a href="delete">Delete</a></button></td>
+             </tr>
+            {% endfor %}
+        </table>
 
 
         </div>

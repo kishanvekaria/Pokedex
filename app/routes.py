@@ -32,24 +32,35 @@ def insertpokemon():
         return redirect(url_for('pokemondatabase'))
     return render_template("insert.html", form=form)
 
-maxi = Pokedata.query.count()
-rand_num= random.randint(1,maxi)
 headings_2 = ("ID","Pokeball_ID","Nickname","Update", "Delete")
 table_2 = Caught.query.all()
 print(table_2)
-ball=Pokedata.id
-@app.route('/catchpokemon')
-def catchpokemon():
-    return render_template("catchpokemon.html")
 
-@app.route('/catchit')
+@app.route('/catchpokemon', methods = ['GET', 'POST'])
+def catchpokemon():
+    headings_2 = ("ID", "Pokeball_ID", "Nickname", "Update", "Delete")
+    table_2 = Caught.query.all()
+    ball = Caught.id
+    return render_template("catchpokemon.html", headings_2=headings_2, table_2 =table_2, ball=ball)
+
+@app.route('/catchit', methods = ['GET', 'POST'])
 def catchit():
-    throw = caughtforms()
-    if throw.validate_on_submit():
-        ball = Caught( pokeball_id=throw.pokeball_id.data, nickname=throw.nickname.data,)
+    maxi = Pokedata.query.count()
+    rand_num = random.randint(1, maxi)
+    rand_poke = Pokedata.query.filter_by(id=rand_num).first()
+    rand_data = str(rand_poke)
+    rand_list = rand_data.split()
+    rand_final = (rand_list[2] + ", Pokenumber#" + str(rand_list[1]) + ", " +  "ID is " + str(rand_list[0]))
+    form = caughtforms()
+    print(Pokedata.query.filter_by(id=rand_list[0]).first())
+    if form.validate_on_submit():
+        ball = Caught( pokeball_id=form.pokeball_id.data, nickname=form.nickname.data, poke_name=Pokedata.query.filter_by(id=rand_list[0]).first())
+        #country = Country.query.filter_by(name='United Kingdom').first()
         db.session.add(ball)
         db.session.commit()
-    return render_template("catchit.html", throw=throw)
+        return redirect(url_for('catchpokemon'))
+    return render_template("catchit.html", form=form, rand_final=rand_final,)
+
 
 @app.route('/delete')
 def delete():
