@@ -12,13 +12,11 @@ def home():
 
 headings = ("ID","Poke_ID","Name","Poketype",)
 table = Pokedata.query.all()
-print(table)
 pokemon=Pokedata.id
 
 @app.route('/pokemondatabase', methods = ['GET', 'POST'])
 def pokemondatabase():
     table = Pokedata.query.all()
-    print(table)
     pokemon = Pokedata.id
     return render_template("pokemondatabase.html", table=table, headings=headings, pokemon=pokemon)
 
@@ -34,7 +32,6 @@ def insertpokemon():
 
 headings_2 = ("ID","Pokeball_ID","Nickname","Update", "Delete")
 table_2 = Caught.query.all()
-print(table_2)
 
 @app.route('/catchpokemon', methods = ['GET', 'POST'])
 def catchpokemon():
@@ -47,9 +44,8 @@ def catchpokemon():
 def catchit():
     maxi = Pokedata.query.count()
     rand_num = random.randint(1, maxi)
-    rand_poke = Pokedata.query.filter_by(id=rand_num).first()
-    rand_data = str(rand_poke)
-    rand_list = rand_data.split()
+    rand_poke = str(Pokedata.query.filter_by(id=rand_num).first())
+    rand_list = rand_poke.split()
     rand_final = (rand_list[2] + ", Pokenumber#" + str(rand_list[1]) + ", " +  "ID is " + str(rand_list[0]))
     form = caughtforms()
     if form.validate_on_submit():
@@ -71,11 +67,9 @@ def delete(ball_id):
 @app.route('/update/<int:ball_id>', methods = ['GET', 'POST'])
 def update(ball_id):
     form = rename()
-    print("helloworld")
     if form.validate_on_submit():
         ballupdate = db.session.query(Caught).filter_by(id=ball_id).one()
         ballupdate.nickname= form.nickname.data
         db.session.commit()
-        print("hello")
         return redirect(url_for('catchpokemon'))
     return render_template('update.html', form=form )
