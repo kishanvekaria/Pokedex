@@ -8,10 +8,12 @@ from app.forms import pokedatabaseforms, caughtforms, rename
 
 class TestBase(TestCase):
     def create_app(self):
-        app.config.update(SQLALCHEMY_DATABASE_URI="sqlite:///test.db", SECRET_KEY='hello')
+
+        app.config.update(SQLALCHEMY_DATABASE_URI='sqlite:///test.db', SECRET_KEY='hello')
         return app
 
     def setup(self):
+        db.drop_all()
         db.create_all()
 
         # sample data for database
@@ -26,8 +28,6 @@ class TestBase(TestCase):
         db.session.add(caughtpoke_2)
         db.session.commit()
 
-
-
     def tearDown(self):
         db.drop_all()
 
@@ -37,7 +37,7 @@ class TestAccess(TestBase):
         self.assertEqual(response.status_code, 200)
 
     def test_access_pokemondatabase(self):
-        response = self.client.post(url_for('pokemondatabase'))
+        response = self.client.get(url_for('pokemondatabase'))
         self.assertEqual(response.status_code, 200)
 
     def test_access_insertpokemon(self):
@@ -45,7 +45,7 @@ class TestAccess(TestBase):
         self.assertEqual(response.status_code, 200)
 
     def test_access_catchpokemon(self):
-        response = self.client.post(url_for('catchpokemon'))
+        response = self.client.get(url_for('catchpokemon'))
         self.assertEqual(response.status_code, 200)
 
     def test_access_catchit(self):
@@ -61,12 +61,6 @@ class TestAccessdelete(TestBase):
     def test_access_delete(self):
         response = self.client.get(url_for('delete', ball_id=1))
         self.assertEqual(response.status_code, 200)
-
-class TestPost(TestBase):
-    def test_post_catchpokemon(self):
-        response = self.client.post(url_for('catchpokemon'))
-        self.assertEqual(response.status_code, 200)
-
 
 class TestRead(TestBase):
     def test_find_poke(self):
