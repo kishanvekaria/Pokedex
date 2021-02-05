@@ -4,19 +4,28 @@ from flask import url_for
 
 from app import app, db
 from app.models import Pokedata, Caught
+from app.forms import pokedatabaseforms, caughtforms, rename
 
 class TestBase(TestCase):
     def create_app(self):
-        app.config.update(SQLALCHEMY_DATABASE_URI="sqlite:///test", SECRET_KEY='hello')
+        app.config.update(SQLALCHEMY_DATABASE_URI="sqlite:///test.db", SECRET_KEY='hello')
         return app
 
     def setup(self):
         db.create_all()
 
-        poke = Pokedata(id=1, poke_id=1, name='Bulba', poketype='Grass')
+        # sample data for database
+        poke = Pokedata(id=1, poke_id=1, name='Bulbasaur', poketype='Grass')
+        poke_2 = Pokedata(id=2, poke_id=2, name='Ivysaur', poketype='Grass')
+        caughtpoke = Caught(id=1, poke_id=1, nickname='Bulba', Poke_name=1)
+        caughtpoke_2 = Caught(id=2, pokeball_id=2, nickname='Ivy', Poke_name=2)
+
         db.session.add(poke)
+        db.session.add(poke_2)
+        db.session.add(caughtpoke)
+        db.session.add(caughtpoke_2)
         db.session.commit()
-        #sample data for database
+
 
 
     def tearDown(self):
@@ -27,9 +36,41 @@ class TestAccess(TestBase):
         response = self.client.get(url_for('home'))
         self.assertEqual(response.status_code, 200)
 
-    def test_find_poke(self):
+    def test_access_pokemondatabase(self):
+        response = self.client.post(url_for('pokemondatabase'))
+        self.assertEqual(response.status_code, 200)
 
-        response = self.client.get(url_for('pokedata'))
-        self.assertIn(b'Bulba', response.data)
+    def test_access_insertpokemon(self):
+        response = self.client.get(url_for('insertpokemon'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_access_catchpokemon(self):
+        response = self.client.post(url_for('catchpokemon'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_access_catchit(self):
+        response = self.client.get(url_for('catchit'))
+        self.assertEqual(response.status_code, 200)
+
+class TestAccessupdate(TestBase):
+    def test_access_update(self):
+        response = self.client.get(url_for('update', ball_id= 2))
+        self.assertEqual(response.status_code, 200)
+
+class TestAccessdelete(TestBase):
+    def test_access_delete(self):
+        response = self.client.get(url_for('delete', ball_id=1))
+        self.assertEqual(response.status_code, 200)
+
+class TestPost(TestBase):
+    def test_post_catchpokemon(self):
+        response = self.client.post(url_for('catchpokemon'))
+        self.assertEqual(response.status_code, 200)
+
+
+class TestRead(TestBase):
+    def test_find_poke(self):
+        response = self.client.get(url_for('pokemondatabase'))
+        self.assertIn(b'Bulbasaur', response.data)
 
 
