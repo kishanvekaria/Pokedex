@@ -9,11 +9,11 @@ from app.forms import pokedatabaseforms, caughtforms, rename
 class TestBase(TestCase):
     def create_app(self):
 
-        app.config.update(SQLALCHEMY_DATABASE_URI='sqlite:///test.db', SECRET_KEY='hello')
+        app.config.update(SQLALCHEMY_DATABASE_URI='sqlite:///test.db', SECRET_KEY='hello', TESTING = True,
+        WTF_CSRF_ENABLED = False)
         return app
 
     def setup(self):
-        db.drop_all()
         db.create_all()
 
         # sample data for database
@@ -36,8 +36,12 @@ class TestAccess(TestBase):
         response = self.client.get(url_for('home'))
         self.assertEqual(response.status_code, 200)
 
+    #def test_access_pokemondatabase(self):
+        #response = self.client.get(url_for('pokemondatabase'))
+        #self.assertEqual(response.status_code, 200)
+
     def test_access_pokemondatabase(self):
-        response = self.client.get(url_for('pokemondatabase'))
+        response = self.client.get('/pokemondatabase')
         self.assertEqual(response.status_code, 200)
 
     def test_access_insertpokemon(self):
@@ -66,5 +70,12 @@ class TestRead(TestBase):
     def test_find_poke(self):
         response = self.client.get(url_for('pokemondatabase'))
         self.assertIn(b'Bulbasaur', response.data)
+
+class Testform(TestBase):
+    def test_form(self):
+        response = self.client.post((url_for('insertpokemon')),
+                                        data=dict(poke_id=1, name="Bulbasaur", poketype='Grass'),follow_redirects=True)
+        self.assertIn(b'Welcome to the Pokedex Database', response.data)
+
 
 
