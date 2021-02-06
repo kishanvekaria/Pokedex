@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
-from app.forms import pokedatabaseforms, caughtforms, rename
-from app.models import  Pokedata, Caught
-from app import app, db
+from application.forms import pokedatabaseforms, caughtforms, rename
+from application.models import  Pokedata, Caught
+from application import app, db
 import random
 from sqlalchemy import func
 
@@ -11,8 +11,6 @@ def home():
     return render_template("home.html")
 
 headings = ("ID","Poke_ID","Name","Poketype",)
-table = Pokedata.query.all()
-pokemon=Pokedata.id
 
 @app.route('/pokemondatabase', methods = ['GET', 'POST'])
 def pokemondatabase():
@@ -31,7 +29,6 @@ def insertpokemon():
     return render_template("insert.html", form=form)
 
 headings_2 = ("ID","Pokeball_ID","Nickname","Update", "Delete")
-table_2 = Caught.query.all()
 
 @app.route('/catchpokemon', methods = ['GET', 'POST'])
 def catchpokemon():

@@ -4,10 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SECRET_KEY'
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://qatraining:password@localhost/pokedex"
 
 db = SQLAlchemy(app)
 
 
-from app import routes, models, forms
+from application import routes, models, forms
 

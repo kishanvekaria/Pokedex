@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, ValidationError
-from app.models import Pokedata
+from application.models import Pokedata
 
 
 class pokedatabaseforms(FlaskForm):
