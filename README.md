@@ -74,6 +74,9 @@ All the data for my app is held on a virtual machine instance in GCP. The shell 
 I used Trello to manage my planning for the project. It contains a very simple user interface which allows for Todo, Doing and Done coloumns.
 This style of planning is taken from the japanese method of Kanban.
 
+To see the actual Trello Board
+[Trello Board]{https://trello.com/b/yTAUXvO3/qa-week-6-project}
+
 This is my initial Trello board:
 ![Trello First](https://trello-attachments.s3.amazonaws.com/6006b837abee6877e9b3597f/60201fdec7de598cda7e0859/89410659280049a87b6849550a940d1c/Beginning_Trello.JPG)
 
