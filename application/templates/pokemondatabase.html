@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} Poke Database {% endblock %}
+
+{% block body %}
+<h1>Welcome to the Pokedex Database</h1>
+<div>
+    <h2><b> Return Home <b/> <button><a href="home">Home</a></button> </h2>
+    <h2><b> Add Pokemon <b/> <button><a href="insert">Click here</a></button> </h2>
+    <div>
+        <div>
+        <table>
+            <tr>
+                {% for header in headings %}
+                <th>{{header}}</th>
+                {% endfor %}
+            </tr>
+
+            {% for pokemon in table%}
+            <tr>
+            <td>{{pokemon.id}}</td> <td>{{pokemon.poke_id}}</td> <td>{{pokemon.name}}</td> <td>{{pokemon.poketype}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        <br>
+
+
+    </div>
+</div>
+
+{% endblock %}
